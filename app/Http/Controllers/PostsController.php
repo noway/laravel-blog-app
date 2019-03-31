@@ -17,6 +17,21 @@ class PostsController extends Controller
     |
     */
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show user's posts
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index() {
 
         $posts = \App\Post::where("user_id", auth()->id())->get();
@@ -39,6 +54,13 @@ class PostsController extends Controller
         ]);
     }
 
+    /**
+     * Validate post data for errors in the form
+     *
+     * @param  array  $data
+     * @param  \App\Post  $post
+     * @return void
+     */
     protected function validatePostData(array $data, $post) {
         $collidingPost = \App\Post::where("slug", $data['slug'])->first();
         if ($collidingPost && (empty($post) || ($post && $post->id !== $collidingPost->id))) {
@@ -63,6 +85,8 @@ class PostsController extends Controller
     /**
      * Show the post edit form.
      *
+     * @param  string  $slug
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function showPostEditForm($slug, Request $request) {
@@ -104,6 +128,7 @@ class PostsController extends Controller
     /**
      * Handle an edit request for a post.
      *
+     * @param  string  $slug
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -133,6 +158,7 @@ class PostsController extends Controller
     /**
      * Handle a deletion request for a post.
      *
+     * @param  string  $slug
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */

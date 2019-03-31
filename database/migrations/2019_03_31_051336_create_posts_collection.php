@@ -21,8 +21,8 @@ class CreatePostsCollection extends Migration
     {
 
         Schema::connection($this->connection)->table('posts', function (Blueprint $collection) {
-            $collection->integer('id')->index();
-            $collection->integer('user_id')->index();
+            $collection->index('id');
+            $collection->unsignedInteger('user_id')->index();
             $collection->string('title');
             $collection->string('slug')->unique();
             $collection->string('image');

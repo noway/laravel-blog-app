@@ -15,6 +15,8 @@
                     @endif
 
                     You are logged in!
+
+                    <a href="/my-posts">View all of your blog posts</a>
                 </div>
             </div>
         </div>

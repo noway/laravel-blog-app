@@ -14,7 +14,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $posts = \App\Post::where("published", "1")->get();
+        $posts = \App\Post::where("published", "1")->orderBy('published_at', 'desc')->get();
         $users = \App\User::all()->keyBy('id');
         return view('blog.index', compact('posts', 'users'));
     }

@@ -34,7 +34,7 @@ class PostsController extends Controller
      */
     public function index() {
 
-        $posts = \App\Post::where("user_id", auth()->id())->get();
+        $posts = \App\Post::where("user_id", auth()->id())->orderBy('published_at', 'desc')->get();
         return view('posts.index', compact('posts'));
     }
 
@@ -50,7 +50,7 @@ class PostsController extends Controller
             'slug' => ['required', 'string', 'max:255'],
             'image' => ['required', 'string', 'url', 'max:255'],
             'content' => ['required', 'string'],
-            'published' => ['accepted'],
+            'published' => [],
         ]);
     }
 
@@ -118,8 +118,8 @@ class PostsController extends Controller
             'image' => $data['image'],
             'content' => $data['content'],
             'short_content' => substr($data['content'], 0, 1000),
-            'published' => $data['published'],
-            'published_at'=> $data['published'] ? new \DateTime() : null,
+            'published' => $data['published'] ?? '0',
+            'published_at'=> ($data['published'] ?? '0') == "1" ? new \DateTime() : null,
         ]);
 
         return redirect('/posts');
@@ -144,8 +144,8 @@ class PostsController extends Controller
             $post->image = $data['image'];
             $post->content = $data['content'];
             $post->short_content = substr($data['content'], 0, 1000);
-            $post->published = $data['published'];
-            $post->published_at = $data['published'] ? new \DateTime() : $post->published_at;
+            $post->published = $data['published'] ?? '0';
+            $post->published_at = ($data['published'] ?? '0') == "1" ? new \DateTime() : $post->published_at;
             $post->save();
         }
         else {

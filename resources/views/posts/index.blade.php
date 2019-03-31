@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <ul>
                         @forelse ($posts as $post)
-                            <li class="m-b-xs">{{ $post->title }}&nbsp;<a href="/posts/{{$post->slug}}/edit" class="btn btn-sm btn-outline-primary">Edit</a>&nbsp;<a href="/posts/{{$post->slug}}/delete" class="btn btn-sm btn-outline-danger">Delete</a></li>
+                            <li class="m-b-xs">{{ $post->title }}&nbsp;{{$post->published == "1" ? '[Published]' : '[Not published]'}}&nbsp;<a href="/posts/{{$post->slug}}/edit" class="btn btn-sm btn-outline-primary">Edit</a>&nbsp;<a href="/posts/{{$post->slug}}/delete" class="btn btn-sm btn-outline-danger">Delete</a></li>
                         @empty
                         <p>No posts yet</p>
                         @endforelse

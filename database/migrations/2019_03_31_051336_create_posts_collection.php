@@ -26,8 +26,8 @@ class CreatePostsCollection extends Migration
             $collection->string('title');
             $collection->string('slug')->unique();
             $collection->string('image');
-            $collection->longText('body');
-            $collection->longText('short_body');
+            $collection->longText('content');
+            $collection->longText('short_content');
             $collection->boolean('published');
             $collection->dateTime('published_at');
             $collection->timestamps();

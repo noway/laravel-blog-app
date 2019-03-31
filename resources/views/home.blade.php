@@ -14,9 +14,11 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    This is your admin dashboard.
 
-                    <a href="/my-posts">View all of your blog posts</a>
+                    <br/>
+                    <br/>
+                    <p><a href="/posts">Your blog posts</a></p>
                 </div>
             </div>
         </div>

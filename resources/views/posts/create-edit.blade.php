@@ -53,11 +53,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="content" class="col-md-4 col-form-label text-md-right">{{ __('Content') }}</label>
+                        <div class="form-group ">
+                            <label for="content" class="col-md-12 col-form-label text-md-left">{{ __('Content') }}</label>
 
-                            <div class="col-md-6">
-                                <textarea id="content" type="text" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" name="content" required>{{ ($post ? $post->content : old('content')) }}</textarea>
+                            <div class="col-md-12">
+                                <textarea id="content" type="text" class="form-control{{ $errors->has('content') ? ' is-invalid' : '' }}" name="content" required rows="20">{{ ($post ? $post->content : old('content')) }}</textarea>
 
                                 @if ($errors->has('content'))
                                     <span class="invalid-feedback" role="alert">

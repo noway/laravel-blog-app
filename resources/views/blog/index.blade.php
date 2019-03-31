@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Blog</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -13,7 +13,7 @@
         <link href="/css/app.css" rel="stylesheet">
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div class="flex-top position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -28,7 +28,16 @@
                 </div>
             @endif
 
-            <div class="content">
+            <div class="content m-t-lg">
+                @forelse ($posts as $post)
+                    <article class="m-b-sm">
+                        <h1>{{ $post->title }}</h1>
+                        <div>{{ $post->content }}</div>
+                        <details open class="m-t-xs f-sm">Published on <time datetime="{{ $post->published_at }}">{{ $post->published_at->format('F jS, Y, g:i a') }}</time> {{ $post->user_id ? 'by ' .$users[$post->user_id]->name : '' }}</details>
+                    </article>
+                @empty
+                <p>No blog posts yet</p>
+                @endforelse
 
             </div>
         </div>

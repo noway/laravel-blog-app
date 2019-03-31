@@ -32,6 +32,11 @@ html, body {
     justify-content: center;
 }
 
+.flex-top {
+    display: flex;
+    justify-content: center;
+}
+
 .position-ref {
     position: relative;
 }
@@ -43,7 +48,6 @@ html, body {
 }
 
 .content {
-    text-align: center;
 }
 
 .title {
@@ -68,4 +72,24 @@ html, body {
 }
 .m-b-md {
     margin-bottom: 30px;
+}
+
+.m-t-xs {
+    margin-top: 10px;
+}
+.m-t-sm {
+    margin-top: 20px;
+}
+.m-t-md {
+    margin-top: 30px;
+}
+.m-t-lg {
+    margin-top: 50px;
+}
+.m-t-xl {
+    margin-top: 100px;
+}
+
+.f-sm {
+    font-size: smaller;
 }

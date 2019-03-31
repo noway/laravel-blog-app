@@ -32,7 +32,7 @@
                 @forelse ($posts as $post)
                     <article class="m-b-sm">
                         <h1>{{ $post->title }}</h1>
-                        <div>{{ $post->content }}</div>
+                        <div class="post-content">{{ $post->content }}</div>
                         <details open class="m-t-xs f-sm">Published on <time datetime="{{ $post->published_at }}">{{ $post->published_at->format('F jS, Y, g:i a') }}</time> {{ $post->user_id ? 'by ' .$users[$post->user_id]->name : '' }}</details>
                     </article>
                 @empty

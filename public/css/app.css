@@ -10695,6 +10695,14 @@ body {
   top: 18px;
 }
 
+.content {
+  padding: 40px;
+}
+
+.post-content {
+  white-space: pre-wrap;
+}
+
 .title {
   font-size: 84px;
 }

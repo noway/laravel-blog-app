@@ -24,7 +24,7 @@ class PostsController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Get a validator for an incoming post creation request.
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -50,7 +50,7 @@ class PostsController extends Controller
     }
 
     /**
-     * Handle a creation request for the post.
+     * Handle a creation request for a post.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -75,19 +75,23 @@ class PostsController extends Controller
 
         return redirect('/posts');
     }
+    /**
+     * Handle a deletion request for a post.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($slug, Request $request)
+    {
+        $data = $request->all();
+        $post = \App\Post::where("slug", $slug)->first();
+        if ($post->user_id == auth()->id()) {
+            $post->delete();
+        }
+        else {
+            // silently proceed
+        }
+        return redirect('/posts');
+    }
 
-    // /**
-    //  * Create a new user instance after a valid registration.
-    //  *
-    //  * @param  array  $data
-    //  * @return \App\User
-    //  */
-    // protected function create(array $data)
-    // {
-    //     return User::create([
-    //         'name' => $data['name'],
-    //         'email' => $data['email'],
-    //         'password' => Hash::make($data['password']),
-    //     ]);
-    // }
 }

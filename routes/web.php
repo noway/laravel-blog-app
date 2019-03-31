@@ -23,3 +23,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/posts', 'PostsController@index')->name('posts');
 Route::get('/posts/create', 'PostsController@showPostCreationForm')->name('posts-create');
 Route::post('/posts/create', 'PostsController@create');
+Route::get('/posts/{slug}/delete', 'PostsController@delete');

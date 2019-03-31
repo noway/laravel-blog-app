@@ -18,7 +18,7 @@
 
                     <br/>
                     <br/>
-                    <p><a href="/posts">Your blog posts</a></p>
+                    <p><a href="/posts">My Blog Posts</a></p>
                 </div>
             </div>
         </div>

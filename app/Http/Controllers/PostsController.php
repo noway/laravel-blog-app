@@ -46,7 +46,24 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showPostCreationForm() {
-        return view('posts.create');
+        $post = null;
+        return view('posts.create-edit', compact('post'));
+    }
+
+    /**
+     * Show the post edit form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showPostEditForm($slug, Request $request) {
+        $data = $request->all();
+        $post = \App\Post::where("slug", $slug)->first();
+        if ($post) {
+            return view('posts.create-edit', compact('post'));
+        }
+        else {
+            return redirect('/posts');
+        }
     }
 
     /**
@@ -59,8 +76,6 @@ class PostsController extends Controller
     {
         $data = $request->all();
         $this->validator($data)->validate();
-
-        // dd($data);
 
         \App\Post::create([
             'user_id' => auth()->id(),
@@ -75,6 +90,36 @@ class PostsController extends Controller
 
         return redirect('/posts');
     }
+
+    /**
+     * Handle an edit request for a post.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($slug, Request $request)
+    {
+        $data = $request->all();
+        $post = \App\Post::where("slug", $slug)->first();
+        if ($post && $post->user_id == auth()->id()) {
+            $this->validator($data)->validate();
+
+            $post->title = $data['title'];
+            $post->slug = $data['slug'];
+            $post->image = $data['image'];
+            $post->content = $data['content'];
+            $post->short_content = substr($data['content'], 0, 1000);
+            $post->published = $data['published'];
+            $post->published_at = $data['published'] ? new \DateTime() : $post->published_at;
+            $post->save();
+        }
+        else {
+            // silently proceed
+        }
+
+        return redirect('/posts');
+    }
+
     /**
      * Handle a deletion request for a post.
      *
@@ -85,7 +130,7 @@ class PostsController extends Controller
     {
         $data = $request->all();
         $post = \App\Post::where("slug", $slug)->first();
-        if ($post->user_id == auth()->id()) {
+        if ($post && $post->user_id == auth()->id()) {
             $post->delete();
         }
         else {

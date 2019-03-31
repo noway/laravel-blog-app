@@ -29,8 +29,7 @@ class PostsController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
+    protected function validator(array $data) {
         return Validator::make($data, [
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255'],
@@ -38,6 +37,17 @@ class PostsController extends Controller
             'content' => ['required', 'string'],
             'published' => ['accepted'],
         ]);
+    }
+
+    protected function validatePostData(array $data, $post) {
+        $collidingPost = \App\Post::where("slug", $data['slug'])->first();
+        if ($collidingPost && (empty($post) || ($post && $post->id !== $collidingPost->id))) {
+            $validator = Validator::make([], ['slug' => 'required'], ['required' => 'This slug already exists']);
+            $validator->validate();
+        }
+        else{
+            $this->validator($data)->validate();
+        }
     }
 
     /**
@@ -75,7 +85,7 @@ class PostsController extends Controller
     public function create(Request $request)
     {
         $data = $request->all();
-        $this->validator($data)->validate();
+        $this->validatePostData($data, null);
 
         \App\Post::create([
             'user_id' => auth()->id(),
@@ -102,7 +112,7 @@ class PostsController extends Controller
         $data = $request->all();
         $post = \App\Post::where("slug", $slug)->first();
         if ($post && $post->user_id == auth()->id()) {
-            $this->validator($data)->validate();
+            $this->validatePostData($data, $post);
 
             $post->title = $data['title'];
             $post->slug = $data['slug'];
